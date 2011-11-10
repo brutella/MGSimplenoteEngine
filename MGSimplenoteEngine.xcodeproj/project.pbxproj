@@ -468,6 +468,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = "MGSimplenoteEngine(OSX)";
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
 				ZERO_LINK = NO;
 			};
