@@ -20,6 +20,17 @@ enum MGSNObjectActions {
 @synthesize callbacks, connections, responses, receivedData;
 @synthesize authToken, email;
 
+- (void)dealloc{
+    [callbacks release];
+    [connections release];
+    [responses release];
+    [receivedData release];
+    [authToken release];
+    [email release];
+    
+    [super dealloc];
+}
+
 - (id)init {
 	self = [super init];
 	if (self != nil) {

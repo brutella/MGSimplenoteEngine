@@ -17,7 +17,7 @@
 																				 (CFStringRef)@"!*'();:@&=+$,/?%#[]",
 																				 kCFStringEncodingUTF8 );
 	
-	return escapedString;
+	return [escapedString autorelease];
 }
 - (NSString*)urlEncoded{
     NSString *escapedString = (NSString*)CFURLCreateStringByAddingPercentEscapes(NULL,
@@ -26,7 +26,7 @@
 																				 (CFStringRef)@"!*'();:@&=+$,/?%#[]",
 																				 kCFStringEncodingUTF8 );
 	
-	return escapedString;
+	return [escapedString autorelease];
 }
 
 @end
