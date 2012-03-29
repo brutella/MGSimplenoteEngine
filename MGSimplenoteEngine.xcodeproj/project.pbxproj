@@ -29,9 +29,7 @@
 		AA41B12A11BE6C3900410288 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = AA41B11C11BE6C3900410288 /* NSData+Base64.m */; };
 		AA747D9F0F9514B9006C5449 /* MGSimplenoteEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* MGSimplenoteEngine_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
-		F614888B14221E2E009B4419 /* JSONKit.h in Sources */ = {isa = PBXBuildFile; fileRef = F614888914221E2E009B4419 /* JSONKit.h */; };
 		F614888C14221E2E009B4419 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F614888A14221E2E009B4419 /* JSONKit.m */; };
-		F614888D14221E2E009B4419 /* JSONKit.h in Sources */ = {isa = PBXBuildFile; fileRef = F614888914221E2E009B4419 /* JSONKit.h */; };
 		F614888E14221E2E009B4419 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F614888A14221E2E009B4419 /* JSONKit.m */; };
 		F6240CFF13913880002A4B50 /* MGSimplenoteEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = F6240CD6139137B9002A4B50 /* MGSimplenoteEngine.h */; };
 		F6A3B0BE139165F600B3DE05 /* MGSimplenoteEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = F6240CD6139137B9002A4B50 /* MGSimplenoteEngine.h */; };
@@ -333,7 +331,6 @@
 				AA41B12611BE6C3900410288 /* MGSimplenoteLogin.m in Sources */,
 				AA41B12811BE6C3900410288 /* MGSNObject.m in Sources */,
 				AA41B12A11BE6C3900410288 /* NSData+Base64.m in Sources */,
-				F614888B14221E2E009B4419 /* JSONKit.h in Sources */,
 				F614888C14221E2E009B4419 /* JSONKit.m in Sources */,
 				F6B24F2714584D4700DD2234 /* NSString+URLEncode.m in Sources */,
 			);
@@ -353,7 +350,6 @@
 				F6A3B0D81391660200B3DE05 /* MGSimplenoteLogin.m in Sources */,
 				F6A3B0D91391660200B3DE05 /* MGSNObject.m in Sources */,
 				F6A3B0DA1391660200B3DE05 /* NSData+Base64.m in Sources */,
-				F614888D14221E2E009B4419 /* JSONKit.h in Sources */,
 				F614888E14221E2E009B4419 /* JSONKit.m in Sources */,
 				F6B24F2814584D4700DD2234 /* NSString+URLEncode.m in Sources */,
 			);
