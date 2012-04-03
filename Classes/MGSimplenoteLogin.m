@@ -10,6 +10,7 @@
 #import "MGCallback.h"
 #import "MGSimplenoteCredentialStore.h"
 #import "NSData+Base64.h"
+#import "NSString+URLEncode.h"
 
 enum LoginActions {
 	Login = 0,
@@ -97,7 +98,15 @@ enum LoginActions {
 
 - (NSData *)HTTPBodyForActionID:(ActionID)action {
 	if (action == Login) {
-        return [NSData base64Encode:[NSString stringWithFormat:@"email=%@&password=%@", self.email, self.password]];
+        NSString *emailAddress = self.email;
+        NSRange atRange = [emailAddress rangeOfString:@"@"];
+        if( atRange.location != NSNotFound ){
+            NSString *prefixAt = [emailAddress substringToIndex:atRange.location];
+            NSString *rest = [emailAddress substringFromIndex:atRange.location];
+            NSString *encodedPrefix = [NSString urlEncodedString:prefixAt];
+            emailAddress = [encodedPrefix stringByAppendingString:rest];
+        }
+        return [NSData base64Encode:[NSString stringWithFormat:@"email=%@&password=%@", emailAddress, self.password]];
 	}
 	return [super HTTPBodyForActionID:action];
 }
