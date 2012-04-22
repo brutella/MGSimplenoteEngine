@@ -53,8 +53,17 @@ enum MGSNObjectActions {
 
 
 - (NSArray *)authParams {
+    NSString *emailAddress = self.email;
+    NSRange atRange = [emailAddress rangeOfString:@"@"];
+    if( atRange.location != NSNotFound ){
+        NSString *prefixAt = [emailAddress substringToIndex:atRange.location];
+        NSString *rest = [emailAddress substringFromIndex:atRange.location];
+        NSString *encodedPrefix = [NSString urlEncodedString:prefixAt];
+        emailAddress = [encodedPrefix stringByAppendingString:rest];
+    }
+    
 	return [NSArray arrayWithObjects:[NSString stringWithFormat:@"auth=%@", self.authToken],
-			[NSString stringWithFormat:@"email=%@", self.email], nil];
+			[NSString stringWithFormat:@"email=%@", emailAddress], nil];
 }
 
 
