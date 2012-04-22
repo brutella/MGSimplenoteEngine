@@ -103,6 +103,10 @@ enum MGSNObjectActions {
 	[[NSNotificationCenter defaultCenter] addObserver:obj selector:failure name:[self failureNotificationNameForSelector:selector] object:nil];
 }
 
+- (void)removeObserver:(id)obj forSelector:(SEL)selector {
+    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self successNotificationNameForSelector:selector] object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self failureNotificationNameForSelector:selector] object:nil];
+}
 
 - (void)postSuccessForSelector:(SEL)sel {
 	[[NSNotificationCenter defaultCenter] postNotificationName:[self successNotificationNameForSelector:sel] object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:self, NSStringFromClass([self class]), nil]];

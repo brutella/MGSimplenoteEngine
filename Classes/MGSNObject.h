@@ -44,6 +44,8 @@ typedef int ActionID;
  */
 - (void)addObserver:(id)obj forSelector:(SEL)selector success:(SEL)success failure:(SEL)failure;
 
+- (void)removeObserver:(id)obj forSelector:(SEL)selector;
+
 /**
  * Posts the success/failure notifications for a given selector.
  */
