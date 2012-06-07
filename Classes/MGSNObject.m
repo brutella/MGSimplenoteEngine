@@ -96,25 +96,25 @@ enum MGSNObjectActions {
 
 
 - (void)addObserver:(id)obj forSelector:(SEL)selector success:(SEL)success failure:(SEL)failure {
-    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self successNotificationNameForSelector:selector] object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self failureNotificationNameForSelector:selector] object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self successNotificationNameForSelector:selector] object:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self failureNotificationNameForSelector:selector] object:self];
 
-	[[NSNotificationCenter defaultCenter] addObserver:obj selector:success name:[self successNotificationNameForSelector:selector] object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:obj selector:failure name:[self failureNotificationNameForSelector:selector] object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:obj selector:success name:[self successNotificationNameForSelector:selector] object:self];
+	[[NSNotificationCenter defaultCenter] addObserver:obj selector:failure name:[self failureNotificationNameForSelector:selector] object:self];
 }
 
 - (void)removeObserver:(id)obj forSelector:(SEL)selector {
-    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self successNotificationNameForSelector:selector] object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self failureNotificationNameForSelector:selector] object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self successNotificationNameForSelector:selector] object:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:obj name:[self failureNotificationNameForSelector:selector] object:self];
 }
 
 - (void)postSuccessForSelector:(SEL)sel {
-	[[NSNotificationCenter defaultCenter] postNotificationName:[self successNotificationNameForSelector:sel] object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:self, NSStringFromClass([self class]), nil]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:[self successNotificationNameForSelector:sel] object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:self, NSStringFromClass([self class]), nil]];
 }
 
 
 - (void)postFailureForSelector:(SEL)sel withError:(NSError *)error {
-	[[NSNotificationCenter defaultCenter] postNotificationName:[self failureNotificationNameForSelector:sel] object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:self, NSStringFromClass([self class]), error, @"error", nil]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:[self failureNotificationNameForSelector:sel] object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:self, NSStringFromClass([self class]), error, @"error", nil]];
 }
 
 
