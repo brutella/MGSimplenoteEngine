@@ -192,8 +192,13 @@ enum MGSNObjectActions {
 	}
 	
 	[self setReceivedData:[NSMutableData data] forActionID:action];
-	[self setConnection:[NSURLConnection connectionWithRequest:req delegate:self] forActionID:action];
-	[[connections objectAtIndex:action] start];
+    
+    // 2012-07-30 mah: Creating url connection which doesn't work on the main thread and  therefore doesn't 
+    // require a run loop because we passing NO to startImmediately and setting a delegate queue.
+    NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:NO];
+	[self setConnection:urlConnection forActionID:action];
+    [urlConnection setDelegateQueue:[NSOperationQueue mainQueue]];
+	[urlConnection start];
 }
 
 
