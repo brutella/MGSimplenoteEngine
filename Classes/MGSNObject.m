@@ -199,6 +199,7 @@ enum MGSNObjectActions {
 	[self setConnection:urlConnection forActionID:action];
     [urlConnection setDelegateQueue:[NSOperationQueue mainQueue]];
 	[urlConnection start];
+    [urlConnection release];
 }
 
 

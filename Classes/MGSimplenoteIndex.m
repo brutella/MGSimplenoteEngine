@@ -43,6 +43,15 @@ enum IndexActions {
 	return self;
 }
 
+- (void)dealloc
+{
+    [contents release];
+    [fullContents release];
+    [mark release];
+    [since release];
+    [super dealloc];
+}
+
 
 - (void)pullFromRemote {
 	[self callMethodWithActionID:PullFromRemote];
