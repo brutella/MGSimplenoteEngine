@@ -38,7 +38,6 @@ enum LoginActions {
 		callback.failure = @selector(loginFailure:);
 		
 		[self setCallback:callback forActionID:Login];
-		[callback release];
 	}
 	return self;
 }
@@ -55,7 +54,6 @@ enum LoginActions {
 	if ([data length] != 0) {
 		NSString *token = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		self.authToken = token;
-		[token release];
 		
 		[self postSuccessForSelector:@selector(login)];
 	} else {

@@ -9,7 +9,6 @@
 #import "MGSimplenote.h"
 #import "MGCallback.h"
 #import "NSData+Base64.h"
-#import "JSONKit.h"
 #import "NSString+URLEncode.h"
 
 enum NoteActions {
@@ -41,7 +40,7 @@ enum NoteActions {
 static NSDictionary *propertyToRespMapping = nil;
 
 + (id)noteWithDictionary:(NSDictionary *)dict {
-	MGSimplenote *note = [[[MGSimplenote alloc] init] autorelease];
+	MGSimplenote *note = [[MGSimplenote alloc] init];
     [note updateWithResponseDictionary:dict];
 	return note;
 }
@@ -54,38 +53,26 @@ static NSDictionary *propertyToRespMapping = nil;
 		callback.success = @selector(pullFromRemoteSuccessWithResponse:data:);
 		callback.failure = @selector(pullFromRemoteFailure:);
 		[self setCallback:callback forActionID:PullFromRemote];
-		[callback release];
 		
 		callback = [[MGCallback alloc] init];
 		callback.target = self;
 		callback.success = @selector(pushToRemoteSuccessWithResponse:data:);
 		callback.failure = @selector(pushToRemoteFailure:);
 		[self setCallback:callback forActionID:PushToRemote];
-		[callback release];
 		
 		callback = [[MGCallback alloc] init];
 		callback.target = self;
 		callback.success = @selector(deleteNoteSuccessWithResponse:data:);
 		callback.failure = @selector(deleteNoteFailure:);
 		[self setCallback:callback forActionID:DeleteNote];
-		[callback release];
 	}
 	return self;
 }
 
-- (void)dealloc {
-	[key release];
-	[text release];
-	[modifyDate release];
-	[createDate release];
-	[deleted release];
-	
-	[super dealloc];
-}
 
 - (NSDictionary *)propertyToRespMapping {
     if (!propertyToRespMapping) {
-        propertyToRespMapping = [[NSDictionary dictionaryWithObjectsAndKeys:@"key", @"key",
+        propertyToRespMapping = [NSDictionary dictionaryWithObjectsAndKeys:@"key", @"key",
                                  @"deleted", @"deleted",
                                  @"modifydate", @"modifyDate",
                                  @"createdate", @"createDate",
@@ -97,7 +84,7 @@ static NSDictionary *propertyToRespMapping = nil;
                                  @"systemtags", @"systemTags",
                                  @"tags", @"tags",
                                  @"content", @"text",
-                                 nil] retain];
+                                 nil];
     }
     return propertyToRespMapping;
 }
@@ -124,8 +111,14 @@ static NSDictionary *propertyToRespMapping = nil;
         [dict setObject:value forKey:[[self propertyToRespMapping] objectForKey:prop]];
     }
 
-    NSString *json = [dict JSONString];
-
+    NSError *error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
+    
+    NSString *json = nil;
+    if (!error) {
+        json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    
     return [json urlEncoded];
 }
 
@@ -166,7 +159,8 @@ static NSDictionary *propertyToRespMapping = nil;
 		return;
 	}
 
-	id conts = [[JSONDecoder decoder] objectWithData:data];
+	NSError *error = nil;
+    id conts = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 	NSAssert([conts isKindOfClass:NSDictionary.class], @"JSON parsing to NSDictionary failed.");
 	
     [self updateWithResponseDictionary:conts];
@@ -180,7 +174,8 @@ static NSDictionary *propertyToRespMapping = nil;
 		return;
 	}
 	
-	id conts = [[JSONDecoder decoder] objectWithData:data];
+    NSError *error = nil;
+    id conts = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 	NSAssert([conts isKindOfClass:NSDictionary.class], @"JSON parsing to NSDictionary failed.");
 
     [self updateWithResponseDictionary:conts];

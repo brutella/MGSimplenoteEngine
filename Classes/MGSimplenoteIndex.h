@@ -48,7 +48,7 @@
 // When the index is pulled, the mark will be auto-populated from the response (nil if no mark).
 @property (nonatomic, copy) NSString *mark;
 
-@property (nonatomic, retain) NSDate *since;
+@property (nonatomic) NSDate *since;
 
 // Retrieves the index from the Simplenote server.
 - (void)pullFromRemote;

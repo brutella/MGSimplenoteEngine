@@ -18,8 +18,8 @@
 - (id)init {
 	self = [super init];
 	if (self != nil) {
-		errors = [[NSMutableArray array] retain];
-		status = [[MGSimplenoteSyncStatus notStartedStatus] retain];
+		errors = [NSMutableArray array];
+		status = [MGSimplenoteSyncStatus notStartedStatus];
 		completedItems = 0;
 		failedItems = 0;
 		totalItems = 0;
@@ -27,19 +27,13 @@
 	return self;
 }
 
-- (void)dealloc {
-	[status release];
-	[errors release];
-	[super dealloc];
-}
 
 - (void)beginWithTotalItemCount:(NSInteger)count {
 	self.completedItems = 0;
 	self.failedItems = 0;
 	self.totalItems = count;
 	
-	[errors release];
-	errors = [[NSMutableArray array] retain];
+	errors = [NSMutableArray array];
 	
 	self.status = [MGSimplenoteSyncStatus inProgressStatus];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"MGSimplenoteSyncBeginNotification" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:self, @"session", nil]];

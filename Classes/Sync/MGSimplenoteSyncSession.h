@@ -18,7 +18,7 @@
 
 @property (nonatomic, assign) NSInteger completedItems, failedItems, totalItems;
 @property (nonatomic, readonly) NSMutableArray *errors;
-@property (nonatomic, retain) MGSimplenoteSyncStatus *status;
+@property (nonatomic) MGSimplenoteSyncStatus *status;
 
 - (void)beginWithTotalItemCount:(NSInteger)count;
 - (void)replaceCompleted:(NSInteger)completeCount failed:(NSInteger)failedCount;

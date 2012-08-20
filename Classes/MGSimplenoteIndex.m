@@ -9,7 +9,6 @@
 #import "MGSimplenoteIndex.h"
 #import "MGCallback.h"
 #import "MGSimplenote.h"
-#import "JSONKit.h"
 
 enum IndexActions {
 	PullFromRemote = 0,
@@ -38,19 +37,10 @@ enum IndexActions {
 		callback.failure = @selector(pullFromRemoteFailure:);
 		
 		[self setCallback:callback forActionID:PullFromRemote];
-		[callback release];
 	}
 	return self;
 }
 
-- (void)dealloc
-{
-    [contents release];
-    [fullContents release];
-    [mark release];
-    [since release];
-    [super dealloc];
-}
 
 
 - (void)pullFromRemote {
@@ -64,7 +54,7 @@ enum IndexActions {
 		return;
 	}
 	NSError *error = nil;	
-	id conts = [[JSONDecoder decoder] objectWithData:data error:&error];
+    id conts = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 	NSAssert([conts isKindOfClass:NSDictionary.class], @"JSON parsing to NSDictionary failed.");
 	
 	if (error == nil) {
@@ -74,8 +64,7 @@ enum IndexActions {
 		for (NSDictionary *obj in data) {
 			[tempArray addObject:[MGSimplenote noteWithDictionary:obj]];
 		}
-		[contents release];
-		contents = [tempArray retain];
+		contents = tempArray;
 
         self.mark = [conts objectForKey:@"mark"];
 		[self postSuccessForSelector:@selector(pullFromRemote)];

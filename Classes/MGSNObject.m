@@ -21,14 +21,8 @@ enum MGSNObjectActions {
 @synthesize authToken, email;
 
 - (void)dealloc{
-    [callbacks release];
-    [connections release];
-    [responses release];
-    [receivedData release];
-    [authToken release];
-    [email release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [super dealloc];
 }
 
 - (id)init {
@@ -39,10 +33,10 @@ enum MGSNObjectActions {
 			[nullArray addObject:[NSNull null]];
 		}
 		
-		callbacks = [[NSMutableArray arrayWithArray:nullArray] retain];
-		connections = [[NSMutableArray arrayWithArray:nullArray] retain];
-		responses = [[NSMutableArray arrayWithArray:nullArray] retain];
-		receivedData = [[NSMutableArray arrayWithArray:nullArray] retain];
+		callbacks = [NSMutableArray arrayWithArray:nullArray];
+		connections = [NSMutableArray arrayWithArray:nullArray];
+		responses = [NSMutableArray arrayWithArray:nullArray];
+		receivedData = [NSMutableArray arrayWithArray:nullArray];
 	}
 	return self;
 }
@@ -199,7 +193,6 @@ enum MGSNObjectActions {
 	[self setConnection:urlConnection forActionID:action];
     [urlConnection setDelegateQueue:[NSOperationQueue mainQueue]];
 	[urlConnection start];
-    [urlConnection release];
 }
 
 
@@ -230,7 +223,7 @@ enum MGSNObjectActions {
 	
 	if (actionID != ActionNotFound) {
 		[self setResponse:(NSHTTPURLResponse *)response forActionID:actionID];
-		[[receivedData objectAtIndex:actionID] setLength:0];
+		[(NSMutableData *)[receivedData objectAtIndex:actionID] setLength:0];
 	}
 }
 
@@ -255,8 +248,8 @@ enum MGSNObjectActions {
 	ActionID actionID = [self actionIDForConnection:connection];
 	
 	if (actionID != ActionNotFound) {
-		NSData *data = [[[receivedData objectAtIndex:actionID] retain] autorelease];
-		NSURLResponse *resp = [[[responses objectAtIndex:actionID] retain] autorelease];
+		NSData *data = [receivedData objectAtIndex:actionID];
+		NSURLResponse *resp = [responses objectAtIndex:actionID];
 		[self setReceivedData:nil forActionID:actionID];
 		[self setResponse:nil forActionID:actionID];
 		[[callbacks objectAtIndex:actionID] invokeSuccessWithResponse:resp data:data];

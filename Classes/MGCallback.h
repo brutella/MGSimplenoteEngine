@@ -17,11 +17,11 @@
  * TODO: Create a subclass that accepts blocks instead of selectors.
  */
 @interface MGCallback : NSObject {
-	id target;
+	id __weak target;
 	SEL success, failure;
 }
 
-@property (nonatomic, assign) id target;
+@property (nonatomic, weak) id target;
 @property (nonatomic, assign) SEL success, failure;
 
 - (void)invokeSuccessWithResponse:(NSURLResponse *)resp data:(NSData *)data;

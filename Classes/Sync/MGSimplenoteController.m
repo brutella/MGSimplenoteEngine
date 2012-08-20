@@ -46,32 +46,8 @@ static MGSimplenoteController *sharedInstance = nil;
 	return self;
 }
 
-- (void)dealloc {
-	[index release];
-	[login release];
-	[notes release];
-	[session release];
-	
-	[super dealloc];
-}
 
 - (id)copyWithZone:(NSZone *)zone {
-    return self;
-}
-
-- (id)retain {
-    return self;
-}
-
-- (unsigned)retainCount {
-    return UINT_MAX;  // denotes an object that cannot be released
-}
-
-- (void)release {
-    //do nothing
-}
-
-- (id)autorelease {
     return self;
 }
 
@@ -102,7 +78,6 @@ static MGSimplenoteController *sharedInstance = nil;
 	[[NSNotificationCenter defaultCenter] addObserver:target selector:progress name:@"MGSimplenoteSyncProgressNotification" object:self];
 
 	if (session.status != [MGSimplenoteSyncStatus notStartedStatus]) {
-		[session release];
 		session = [[MGSimplenoteSyncSession alloc] init];
 	}
 	[self prepareSync];

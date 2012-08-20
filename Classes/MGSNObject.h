@@ -19,7 +19,7 @@ typedef int ActionID;
 	NSString *baseURLString;
 }
 
-@property (nonatomic, retain) NSMutableArray *callbacks, *connections, *responses, *receivedData;
+@property (nonatomic) NSMutableArray *callbacks, *connections, *responses, *receivedData;
 @property (nonatomic, copy) NSString *authToken, *email;
 
 // The base URL for all API calls.
@@ -27,9 +27,6 @@ typedef int ActionID;
 
 // An array of @"key=value" strings containing the auth params (authToken and email).
 - (NSArray *)authParams;
-
-// Update the object's auth token and email with the values stored in the credential store.
-- (void)updateCredentialsFromStore;
 
 // Returns an NSError instance representing the error status of an NSHTTPURLResponse.
 - (NSError *)errorForResponse:(NSHTTPURLResponse *)resp;
